@@ -1,0 +1,138 @@
+Books = []
+
+def add_book():
+    book = input("\nEnter The Book Name : ")
+    author = input("Enter The Author Name : ")
+    page = int(input("Enter The Total Pages : "))
+    reviews = int(input("Enter The Rating (Out Of 10) : "))
+    if reviews > 10:
+        print("Please Give A Proper Rating (Out Of 10)")
+        return
+    category = input("Enter The Category Of Book : ")
+
+    book_details = {
+        "Book": book,
+        "Author": author,
+        "Pages": page,
+        "Review": reviews,
+        "Category": category
+    }
+
+    Books.append(book_details)
+    print("Book Is Added!\n", Books, "\n")
+
+def update_book():
+    if not Books:
+        print("Please Add The Book First")
+    else:
+        for index, book in enumerate(Books, start=1):
+            print(f"\n{index}. {book}")
+        
+        update = int(input("Enter The Number Of Book to Update : ")) - 1
+        if update < 0 or update >= len(Books):
+            print("This Is An Invalid Number")
+            return
+        
+        print("Please Fill The Details Given Below: ")
+
+        new_book_name = input("Enter The Book Name : ")
+        new_author_name = input("Enter The Author Name : ")
+        new_pages = int(input("Enter The Total Pages : "))
+        new_reviews = int(input("Enter The Rating (Out Of 10) : ")) 
+        if (new_reviews > 10):
+            print("Please Give A Proper Rating (Out Of 10)")
+            return
+        new_category = input("Enter The Category Of Book: ")
+
+        Books[update].update({
+            "Book": new_book_name,
+            "Author": new_author_name,
+            "Pages": new_pages,
+            "Review": new_reviews,
+            "Category": new_category
+        })
+
+        print("Book Is Updated!\n", Books, "\n")
+
+def view_book():
+    if not Books:
+        print("Please Add The Book First")
+    else:
+        for index, book in enumerate(Books, start=1):
+            print(f"{index} \n {book}")
+
+def delete_book():
+    if not Books:
+        print("Please Add The Book First")
+    else:
+        for index, book in enumerate(Books, start=1):
+            print(f"{index}. {book}")
+        
+        delete = int(input("Enter The Book Number To Delete : ")) - 1
+        if (delete < 0 or delete >= len(Books)):
+            print("Invalid Book Number\n")
+            return
+        deleting = Books.pop(delete)
+        print(f"The Book Is Deleted: {deleting}")
+
+def find_book():
+    title_of_book = input("\nEnter The Name Of Book : ")
+    author = input("Enter The Author Name : ")
+
+    found = False
+    for book in Books:
+        if book["Book"] == title_of_book and book["Author"].lower() == author.lower():
+            found = True
+            print("Book Found: ", book)
+            break
+
+    if not found:
+        print("The Book Isn't Found\n")
+
+def main_display():
+    while True:
+        greet = "\nLibrary Management System".center(50)
+
+        main_menu = ("""
+        1. Add Book
+        2. View Book
+        3. Update Book
+        4. Delete Book
+        5. Find Book
+        6. Exit Programme""").center(50) 
+
+        print(greet)
+        print(main_menu)
+
+        choice = int(input("Enter The Number To Select : "))
+        print("Please Enter A Valid Number")
+        
+        if (choice == 1):
+            print(f"\tYou Chose: {choice} Option\n")
+            add_book()
+
+        elif (choice == 2):
+            print(f"\tYou Chose: {choice} Option\n")
+            view_book()
+
+        elif (choice == 3):
+            print(f"You Chose: {choice} Option")
+            update_book()
+    
+        elif (choice == 4):
+            print(f"\tYou Chose: {choice} Option\n")
+            delete_book()
+
+        elif choice == 5:
+            print(f"\tYou Chose: {choice} Option\n")
+            find_book()
+    
+        elif (choice == 6):
+            thank = "Thank You For Using The Programme".center(50)
+            print(thank, "\n")
+            break
+
+        else:
+            print("Please Enter A Valid Option")
+
+main_display()
